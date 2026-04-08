@@ -1,137 +1,170 @@
-// import { View, Text } from 'react-native'
-// import React from 'react'
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Stack from './Stack';
-// import Mobile_Games from '../Screens/Sub_Screen/Mobile_Games';
-// import Home from '../Screens/Home';
-// import { NavigationContainer } from '@react-navigation/native';
-// import GamesList from '../Database/GameList';
-// import { BottomTabBar } from '@react-navigation/bottom-tabs';
-// import { LinearGradient } from 'expo-linear-gradient';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Platform, StyleSheet, Text } from 'react-native';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
-
-// const Tab = createBottomTabNavigator();
-
-
-// const NavBar = () => {
-
-//     // Custom Gradient Tab Bar
-//     const GradientTabBar = (props) => (
-//         <LinearGradient
-//             colors={['#3B302E', '#2B2221']}
-//             start={{ x: 0, y: 0 }}
-//             end={{ x: 0, y: 1 }}
-//             style={{
-//                 position: 'absolute',
-//                 left: 0,
-//                 right: 0,
-//                 bottom: 0,
-//             }}
-//         >
-//             <BottomTabBar {...props} />
-//         </LinearGradient>
-//     );
-
-//     return (
-//         <Tab.Navigator
-//             initialRouteName='Home'
-//             tabBar={(props) => <GradientTabBar {...props} />}
-//             screenOptions={{
-//                 headerShown: false,
-//                 tabBarActiveTintColor: 'white',
-//                 tabBarInactiveTintColor: 'grey',
-//                 tabBarStyle: {
-//                     backgroundColor: 'transparent',
-//                     // height: 70,
-//                     // paddingVertical: 10,
-//                     // borderTopLeftRadius: 15,
-//                     // borderTopRightRadius: 15,
-//                 },
-//             }}
-//         >
-//             <Tab.Screen name="Home" component={Stack} />
-//             <Tab.Screen name="Profile" component={Mobile_Games} />
-//             <Tab.Screen name="GamesList" component={GamesList} />
-//         </Tab.Navigator>
-//     );
-// }
-
-// export default NavBar
-
-
-
-import React from 'react';
-import { Image, Text } from 'react-native';
-import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Stack from './Stack';
-import GamesList from '../Database/GameList';
+import Movie from '../Screens/Movie';
+import Profile from '../Screens/Profile';
+import Search from '../Screens/Search';
 import Mobile_Games from '../Screens/Sub_Screen/Mobile_Games';
-
+import Stack from './Stack';
 
 const Tab = createBottomTabNavigator();
+const SearchStack = createStackNavigator();
 
-const GradientTabBar = (props) => (
-    <LinearGradient
-        colors={['#3B302E', '#2B2221']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
+// ─── Search Stack Navigator ──────────────────────────────────────
+function SearchNavigator() {
+  return (
+    <SearchStack.Navigator screenOptions={{ headerShown: false }}>
+      <SearchStack.Screen name="SearchScreen" component={Search} />
+      <SearchStack.Screen
+        name="Movie"
+        component={Movie}
+        options={{
+          tabBarStyle: { display: 'none' }  // 👈 hides navbar
         }}
-    >
-        <BottomTabBar {...props} />
-    </LinearGradient>
+      />
+    </SearchStack.Navigator>
+  );
+}
+
+
+// ─── Custom Icons ────────────────────────────────────────────────
+
+const HomeIcon = ({ color }) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z"
+      fill={color}
+    />
+  </Svg>
 );
 
-export default function App() {
-    return (
-        <Tab.Navigator
-            tabBar={(props) => <GradientTabBar {...props} />}
-            screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarActiveTintColor: 'white',
-                tabBarInactiveTintColor: 'gray',
-                tabBarStyle: {
-                    backgroundColor: 'transparent',
-                    borderTopWidth: 0,
-                    elevation: 0,
-                },
-                tabBarIcon: ({ focused, color, size }) => {
-                    if (route.name === 'Home') {
-                        return <Ionicons name="home" size={24} color={color} />;
-                    } else if (route.name === 'New & Hot') {
-                        return <Ionicons name="play-circle-outline" size={24} color={color} />;
-                    } else if (route.name === 'My Netflix') {
-                        return (
-                            <Image
-                                source={{ uri: 'https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg' }} // example profile image
-                                style={{
-                                    width: 24,
-                                    height: 24,
-                                    borderRadius: 6,
-                                    borderWidth: focused ? 2 : 0,
-                                    borderColor: 'white',
-                                }}
-                            />
-                        );
-                    }
-                },
-                tabBarLabel: ({ focused, color }) => {
-                    let label = route.name;
-                    return <Text style={{ color, fontSize: 12 }}>{label}</Text>;
-                },
-            })}
-        >
-            <Tab.Screen name="Home" component={Stack} />
-            <Tab.Screen name="New & Hot" component={GamesList} />
-            <Tab.Screen name="My Netflix" component={Mobile_Games} />
-        </Tab.Navigator>
+const FastLaughsIcon = ({ color }) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+    <Circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.8" />
+    <Path
+      d="M8 13.5C8 13.5 9.5 16 12 16C14.5 16 16 13.5 16 13.5"
+      stroke={color}
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+    <Circle cx="9" cy="10" r="1" fill={color} />
+    <Circle cx="15" cy="10" r="1" fill={color} />
+  </Svg>
+);
 
-    );
+const NewHotIcon = ({ color }) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+    <Rect x="3" y="3" width="18" height="14" rx="2" stroke={color} strokeWidth="1.8" />
+    <Path d="M10 8.5L15 11L10 13.5V8.5Z" fill={color} />
+    <Path d="M8 21H16" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+    <Path d="M12 17V21" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+  </Svg>
+);
+
+const SearchIcon = ({ color }) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+    <Circle cx="11" cy="11" r="7" stroke={color} strokeWidth="1.8" />
+    <Path
+      d="M16.5 16.5L21 21"
+      stroke={color}
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+const DownloadsIcon = ({ color }) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+    <Circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.8" />
+    <Path
+      d="M12 7V14M12 14L9 11M12 14L15 11"
+      stroke={color}
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+// ─── Tab Label ───────────────────────────────────────────────────
+const TabLabel = ({ label, color }) => (
+  <Text style={[styles.label, { color }]}>{label}</Text>
+);
+
+// ─── NavBar ──────────────────────────────────────────────────────
+export default function NavBar() {
+  return (
+    <Tab.Navigator
+      initialRouteName="HomeTab"
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#6b6b6b',
+      }}
+    >
+      <Tab.Screen
+        name="HomeTab"
+        component={Stack}
+        options={{
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+          tabBarLabel: ({ color }) => <TabLabel label="Home" color={color} />,
+        }}
+      />
+
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color }) => <FastLaughsIcon color={color} />,
+          tabBarLabel: ({ color }) => <TabLabel label="Fast Laughs" color={color} />,
+        }}
+      />
+
+      <Tab.Screen
+        name="NewHot"
+        component={Mobile_Games}
+        options={{
+          tabBarIcon: ({ color }) => <NewHotIcon color={color} />,
+          tabBarLabel: ({ color }) => <TabLabel label="New & Hot" color={color} />,
+        }}
+      />
+
+      <Tab.Screen
+        name="Search"
+        component={SearchNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <SearchIcon color={color} />,
+          tabBarLabel: ({ color }) => <TabLabel label="Search" color={color} />,
+        }}
+      />
+
+      <Tab.Screen
+        name="Downloads"
+        component={Mobile_Games}
+        options={{
+          tabBarIcon: ({ color }) => <DownloadsIcon color={color} />,
+          tabBarLabel: ({ color }) => <TabLabel label="Downloads" color={color} />,
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
+
+// ─── Styles ──────────────────────────────────────────────────────
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: '#000',
+    borderTopWidth: 0,
+    height: Platform.OS === 'ios' ? 85 : 65,
+    paddingBottom: Platform.OS === 'ios' ? 25 : 8,
+    paddingTop: 8,
+  },
+  label: {
+    fontSize: 10,
+    fontWeight: '500',
+    marginTop: 2,
+  },
+});

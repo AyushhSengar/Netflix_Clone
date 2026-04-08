@@ -1,97 +1,178 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Image, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
-import GamesList from '../Database/GameList';
-import data from '../Database/AppList.js';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { default as Ionicons } from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { db } from "../../config/firebaseConfig";
+
+// 🔥 ADDED
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { auth } from "../../config/firebaseConfig";
+// 🔥 ADDED
+
+import { signOut } from 'firebase/auth';
+
+const handleLogout = async () => {
+  await signOut(auth);
+  // App.js will automatically redirect to Intro!
+};
 
 
-const Home = (navigation) => {
-    navigation = useNavigation()
-    return (
-        <LinearGradient
-            colors={['#1a1a2e', '#31263d', 'black']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{ flex: 1 }}
-        >
-            <View style={styles.container}>
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        paddingHorizontal: responsiveWidth(4),
-                        paddingBottom: responsiveHeight(2)
+const DATA = [
+  {
+    id: '1',
+    img_url:"https://m.media-amazon.com/images/I/81Y1OJVIoJL._UF1000,1000_QL80_.jpg",
+    title: 'First Item',
+  },
+  { 
+    img_url:"https://puzzlemania-154aa.kxcdn.com/products/2024/puzzle-clementoni-1000-pieces-netflix-squid-game.webp",
+    title: 'Second Item',
+  },
+  { 
+    img_url:"https://lumiere-a.akamaihd.net/v1/images/p_doctorstrange_19918_516f94d3.jpeg",
+    title: 'Third Item',
+  },
+    { 
+    img_url:"https://m.media-amazon.com/images/M/MV5BZDdhMTAwMmQtOTVlYi00OTcwLTllZGMtMjc4NGU0NzFhODM3XkEyXkFqcGc@._V1_.jpg",
+    title: 'Second Item',
+   
+  },
+    { 
+    img_url:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkIBS32B4Br16OAdgszVHXYw39I05ehv_OCd1MTzsBqt0XzM5EHgy7KxHt6sXMRzbpxDY&usqp=CAU",
+    title: 'Third Item',
+  },
+];
 
-                    }}
-                >
-                    <View>
-                        <Text
-                            style={{
-                                fontSize: responsiveFontSize(3),
-                                fontWeight: "500",
-                                color: "#FAF9F6"
-                            }}
-                        >
-                            For Axel
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
+const Home = () => {
+  const navigation = useNavigation(); // ✅ clean declaration
 
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress={() =>
-                                console.log("Screen Mirroring")
-                            }>
-                            <MaterialCommunityIcons name="cast-connected" color="#FAF9F6" size={responsiveFontSize(3)} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() =>
-                                console.log("Search")
-                            }>
-                            <Ionicons style={{ marginLeft: responsiveWidth(4), marginRight: responsiveWidth(2) }} name="search" color="#FAF9F6" size={responsiveFontSize(3)} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <ScrollView>
-                    <View
-                        style={{
-                            marginBottom: responsiveHeight(2),
-                            flexDirection: "row",
-                            paddingHorizontal: responsiveWidth(4),
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // 🔥 ADDED
+    const [authChecked, setAuthChecked] = useState(false);
+  const [username, setUsername] = useState("");
+  const [userLoaded, setUserLoaded] = useState(false);
 
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                borderWidth: 1,
-                                borderColor: "grey",
-                                borderRadius: 20,
-                                marginRight: responsiveWidth(1),
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    color: "white",
-                                    padding: 8,
-                                    paddingHorizontal: responsiveWidth(3.5),
-                                    fontSize: responsiveFontSize(1.6),
-                                }}
-                            >
-                                Series
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
+  const getMovies = async () => {
+    try {
+      console.log("Fetching data...");
+      const snapshot = await getDocs(collection(db, "Home_Page"));
+
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      console.log("DATA:", data);
+      setMovies(data);
+    } catch (err) {
+      console.log("ERROR:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const userRef = doc(db, "USERS", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          setUsername(userSnap.data().UserName);
+        } else {
+          console.log("No user doc");
+        }
+
+        const snapshot = await getDocs(collection(db, "Home_Page"));
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setMovies(data);
+
+      } catch (error) {
+        console.log("ERROR:", error);
+      }
+    }
+
+    setAuthChecked(true);
+    setUserLoaded(true); // ✅ ADD THIS
+  });
+
+  return unsubscribe;
+}, []);
+
+    if (!authChecked || !userLoaded) {
+        return <View style={{ flex: 1, backgroundColor: "black" }} />;
+    }
+  return ( 
+    <View style={{ flex: 1 }}>
+      <LinearGradient
+        colors={['#1a1a2e', '#31263d', 'black']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.container}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: responsiveWidth(4),
+              paddingBottom: responsiveHeight(2)
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: responsiveFontSize(3),
+                  fontWeight: "500",
+                  color: "#FAF9F6"
+                }}
+              >
+                {/* 🔥 ONLY CHANGE */}
+                For {username || "Axel"}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity>
+                <MaterialCommunityIcons name="cast-connected" color="#FAF9F6" size={responsiveFontSize(3)} />
+              </TouchableOpacity>
+           <TouchableOpacity onPress={() => navigation.getParent().navigate('Search')}>
+                <Ionicons 
+                    style={{ marginLeft: responsiveWidth(4), marginRight: responsiveWidth(2) }} 
+                    name="search" 
+                    color="#FAF9F6" 
+                    size={responsiveFontSize(3)} 
+                />
+                </TouchableOpacity>
+            </View>
+          </View>
+
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 200 }}>
+            
+            {/* 🔥 EVERYTHING BELOW IS UNTOUCHED */}
+
+            <View
+              style={{
+                marginBottom: responsiveHeight(2),
+                flexDirection: "row",
+                paddingHorizontal: responsiveWidth(4),
+              }}
+            >
+              <TouchableOpacity style={{ borderWidth: 1, borderColor: "grey", borderRadius: 20 }}>
+                <Text style={{ color: "white", padding: 8 }}>Series</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                             style={{
                                 borderWidth: 1,
                                 borderColor: "grey",
@@ -110,6 +191,9 @@ const Home = (navigation) => {
                                 Films
                             </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={handleLogout}>
+  <Text style={{ color: 'red' }}>Sign Out</Text>
+</TouchableOpacity>
                         <TouchableOpacity
                             style={{
                                 borderWidth: 1,
@@ -132,7 +216,7 @@ const Home = (navigation) => {
                             <AntDesign style={{ marginRight: 12, marginTop: responsiveWidth(2.6) }} name="down" color="white" size={14} />
                         </TouchableOpacity>
                     </View>
-                    <View>
+                <View>
                         <ImageBackground
                             style={{
                                 // width: responsiveWidth(85),
@@ -149,18 +233,17 @@ const Home = (navigation) => {
                         >
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity style={styles.playButton}>
-                                    <Icon name="play" size={26} color="#000" />
+                                    <Ionicons name="play" size={26} color="#000" />
                                     <Text style={styles.playText}>Play</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.listButton}>
-                                    <Icon name="add" size={26} color="#fff" />
+                                    <Ionicons name="add" size={26} color="#fff" />
                                     <Text style={styles.listText}>My List</Text>
                                 </TouchableOpacity>
                             </View>
                         </ImageBackground>
-                    </View>
-                    <GamesList />
+                    </View> 
                     <View>
                         <View
                             style={{
@@ -181,46 +264,27 @@ const Home = (navigation) => {
                                     Popular on Netflix
                                 </Text>
                             </View>
-                        </View>
-                        <ScrollView horizontal={true}>
-                            <View
-                                style={{
-                                    marginHorizontal: responsiveWidth(4),
-                                    marginTop: responsiveHeight(1),
-                                    flexDirection: "row",
+                        </View>  
+                            <FlatList
+                                data={DATA}
+                                horizontal={true}
+                                scrollEnabled={true}
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{
+                                    paddingHorizontal: responsiveWidth(2),
+                                    marginVertical:responsiveHeight(2),
                                     gap: 5,
                                 }}
-                            >
-                                <TouchableOpacity>
-                                    <Image source={{ uri: "https://m.media-amazon.com/images/I/81Y1OJVIoJL._UF1000,1000_QL80_.jpg" }}
-                                        style={styles.img}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={{ uri: "https://puzzlemania-154aa.kxcdn.com/products/2024/puzzle-clementoni-1000-pieces-netflix-squid-game.webp" }}
-                                        style={styles.img}
-                                    />
-
-                                </TouchableOpacity>
-
-                                <TouchableOpacity>
-                                    <Image source={{ uri: "https://lumiere-a.akamaihd.net/v1/images/p_doctorstrange_19918_516f94d3.jpeg" }}
-                                        style={styles.img}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={{ uri: "https://m.media-amazon.com/images/M/MV5BZDdhMTAwMmQtOTVlYi00OTcwLTllZGMtMjc4NGU0NzFhODM3XkEyXkFqcGc@._V1_.jpg" }}
-                                        style={styles.img}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkIBS32B4Br16OAdgszVHXYw39I05ehv_OCd1MTzsBqt0XzM5EHgy7KxHt6sXMRzbpxDY&usqp=CAU" }}
-                                        style={styles.img}
-                                    />
-                                </TouchableOpacity>
-
-                            </View>
-                        </ScrollView>
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity>
+                                        <Image
+                                            source={{ uri: item.img_url }}
+                                            style={styles.img}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                                keyExtractor={(item) => item.id}
+                            />     
                     </View>
                     <View>
                         <View
@@ -349,12 +413,16 @@ const Home = (navigation) => {
                     </View>
                     <StatusBar style="inverted" />
                 </ScrollView>
-            </View>
-        </LinearGradient>
+            {/* <StatusBar style="inverted" /> */}
+          {/* </ScrollView> */}
+
+        </View>
+      </LinearGradient> 
+    </View>
+  );
+};
 
 
-    );
-}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -365,12 +433,13 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
         gap: 10,
-        marginTop: responsiveHeight(58),
         marginBottom: responsiveHeight(1.5),
+        paddingBottom:20,
         justifyContent: "center",
+        marginTop: responsiveHeight(58),
     },
+
     playButton: {
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -411,11 +480,8 @@ const styles = StyleSheet.create({
         height: 180, width: 120, borderRadius: 4,
     },
     bigimg: {
-        height: 310, width: 170, borderRadius: 4,
-        marginBottom: 200,
+        height: 310, width: 170, borderRadius: 4, 
     }
 });
 
 export default Home;
-
-
