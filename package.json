@@ -5,14 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
-    "@ant-design/react-native": "^4.2.0",
     "@expo/metro-runtime": "~6.1.2",
-    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/datetimepicker": "^9.1.0",
     "@react-native-vector-icons/material-icons": "^12.0.1",
     "@react-navigation/bottom-tabs": "^7.4.2",
@@ -34,6 +33,7 @@
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-svg": "15.12.1",
+    "react-native-vector-icons": "^10.3.0",
     "react-native-video": "^6.15.0",
     "react-native-video-player": "^0.16.3",
     "react-native-web": "^0.21.0"

@@ -17,10 +17,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.jpg",
+        "foregroundImage": "./assets/splash-icon.jpg",
         "backgroundColor": "black"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.agentlegend.Netflix"
     },
     "web": {
       "favicon": "./assets/favicon.png"

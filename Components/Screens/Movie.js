@@ -1,6 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect, useState } from 'react';
 import {
+    ActivityIndicator,
     Dimensions,
     Image,
     Platform,
@@ -12,7 +15,6 @@ import {
     View,
 } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
-
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
 const ANDROID_SB = Platform.OS === 'android' ? StatusBar.currentHeight ?? 24 : 0;
 
@@ -83,6 +85,43 @@ const EpisodeCard = ({ number, title }) => (
 export default function Movie() {
   const navigation = useNavigation();
   const route = useRoute();
+  
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isDownloaded, setIsDownloaded] = useState(false);
+  const checkDownload = async () => {
+  const data = await AsyncStorage.getItem('downloads');
+    if (data) {
+        const downloads = JSON.parse(data);
+        if (downloads.find(d => d.Title === item.Title)) {
+        setIsDownloaded(true);
+        }
+    }
+};
+
+    useEffect(() => {
+    checkDownload();
+    }, []);
+
+    const handleDownload = async () => {
+    setIsLoading(true);
+
+    const data = await AsyncStorage.getItem('downloads');
+    let downloads = data ? JSON.parse(data) : [];
+
+    if (!downloads.find(d => d.Title === item.Title)) {
+        downloads.push(item);
+        await AsyncStorage.setItem('downloads', JSON.stringify(downloads));
+    }
+
+    // fake delay (for UX)
+    setTimeout(() => {
+        setIsDownloaded(true);
+        setIsLoading(false);
+    }, 800);
+    };
+
+
   const { item } = route.params;
 
   const isWebSeries = item.Type === 'Web Series';
@@ -95,7 +134,12 @@ export default function Movie() {
       }))
     : [];
 
+    
   return (
+    //     <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+    //   <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+      
+    //   <ScrollView>
     <View style={styles.root}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
 
@@ -172,11 +216,22 @@ export default function Movie() {
             <Text style={styles.playText}>Play</Text>
           </TouchableOpacity>
 
-          {/* ── Download Button ── */}
-          <TouchableOpacity style={styles.downloadBtn} activeOpacity={0.85}>
-            <DownloadIcon />
-            <Text style={styles.downloadText}>Download</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.downloadBtn}
+        activeOpacity={0.85}
+        onPress={handleDownload}
+        disabled={isLoading}
+        >
+        <DownloadIcon />
+
+        {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+        ) : (
+            <Text style={styles.downloadText}>
+            {isDownloaded ? 'Downloaded' : 'Download'}
+            </Text>
+        )}
+        </TouchableOpacity>
 
           {/* ── Description ── */}
           <Text style={styles.description}>
@@ -243,6 +298,8 @@ export default function Movie() {
         </View>
       </ScrollView>
     </View>
+// </ScrollView>
+//     </SafeAreaView>
   );
 }
 
@@ -251,6 +308,8 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: '#000',
+    paddingTop:40,
+    // marginTop:60,
   },
   scroll: {
     flex: 1,

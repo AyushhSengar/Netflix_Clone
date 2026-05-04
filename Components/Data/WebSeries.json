@@ -1,0 +1,332 @@
+[
+  {
+    "Title": "Wednesday",
+    "Type": "Web Series",
+    "IMG": "https://m.media-amazon.com/images/I/81Y1OJVIoJL._UF1000,1000_QL80_.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Squid Game",
+    "Type": "Web Series",
+    "IMG": "https://puzzlemania-154aa.kxcdn.com/products/2024/puzzle-clementoni-1000-pieces-netflix-squid-game.webp",
+    "Seasons": 2
+  },
+  {
+    "Title": "Alice in Borderland",
+    "Type": "Web Series",
+    "IMG": "https://m.media-amazon.com/images/M/MV5BZDdhMTAwMmQtOTVlYi00OTcwLTllZGMtMjc4NGU0NzFhODM3XkEyXkFqcGc@._V1_.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Formula 1: Drive to Survive",
+    "Type": "Web Series",
+    "IMG": "https://territorystudio.com/wp-content/uploads/2021/03/f1dtss3boxshot_na_05_en.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "The Office",
+    "Type": "Web Series",
+    "IMG": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiIOGpa1yBUgK5rzmyOe0R9WnyOvDNBs8K1rMZyrii7Om2Tl58buInfrtrg5_MKwxACxw&usqp=CAU",
+    "Seasons": 9
+  },
+  {
+    "Title": "Love Is Blind",
+    "Type": "Web Series",
+    "IMG": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRazrLF4vHhW46Vb4Umytf7BhgPdYQjargbQ&s",
+    "Seasons": 7
+  },
+  {
+    "Title": "Better Call Saul",
+    "Type": "Web Series",
+    "IMG": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTlZudogDC96zcQ8h1btvghFoM6Y7qQd94UNUyceBqXslnarv260_Ij7QEvSp_FNmldAci5",
+    "Seasons": 6
+  },
+  {
+    "Title": "One Piece",
+    "Type": "Web Series",
+    "IMG": "https://i.imgur.com/fqODI9A.jpg",
+    "Seasons": 1
+  },
+  {
+    "Title": "Daredevil",
+    "Type": "Web Series",
+    "IMG": "https://i.pinimg.com/736x/06/75/c4/0675c460a19a1b3f176fdc5527afc77c.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Money Heist",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+    "Seasons": 5
+  },
+  {
+    "Title": "Breaking Bad",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
+    "Seasons": 5
+  },
+  {
+    "Title": "Game of Thrones",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg",
+    "Seasons": 8
+  },
+  {
+    "Title": "Stranger Things",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "The Crown",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/1M876KPjulVwppEpldhdc8V4o68.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "Dark",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Narcos",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/rTmal9fDbwh5F0waol2hq35U4ah.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Ozark",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/pCGyPEiYpJafl8FEeWdQxKkiMBF.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "The Witcher",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbXyLQTVa04URsPm.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "The Last of Us",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "House of the Dragon",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/t9XkeE7HzOsdQcDDDapDYh8Rrmt.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Peaky Blinders",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGkPaQca.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "The Boys",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "Westworld",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/8MfgyFHf7XEboZJPZXCIDqqiz6e.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "Chernobyl",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg",
+    "Seasons": 1
+  },
+  {
+    "Title": "The Mandalorian",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/sWgBv7LV2rencpgnTSCBLNmAZkN.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Loki",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/kEl2t3OhXc3Zb9FBh1AuYzRTCHa.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Black Mirror",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/7PRddO7z7mcPi21nZTCMGShAyy1.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "Mindhunter",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/b1J8pHCHMa3KHBSM8jpHRKqexRe.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Friends",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/f496cm9enuEsZkSPzCwnTESEK5s.jpg",
+    "Seasons": 10
+  },
+  {
+    "Title": "The Sopranos",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/57okJJUBK0UP1LKy9x7BWiGPHCt.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "True Detective",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/sagqTFhMqOPVdBUCGYq5H0EFjv8.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "Succession",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/e2X8jGCOyFkHQoJA7BnoMjCMEzN.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "The Handmaid's Tale",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/oJdJaXgKSObL7vZTOaWpYVdvXkZ.jpg",
+    "Seasons": 5
+  },
+  {
+    "Title": "Lupin",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/sgxawbFB7oUAMoQWBDQF3pOUMlE.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Emily in Paris",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/yi7bC1NTBBzHOBkMsOuHFqOkMKT.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "Bridgerton",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/luoKpgVwi1E5nQsi7W0UuKHu2Rq.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "The Queen's Gambit",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/zU0htwkhNvBQdVSIKB9s6hgVeFK.jpg",
+    "Seasons": 1
+  },
+  {
+    "Title": "Cobra Kai",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/6POBOQmBvBBkTqSBqKFqFMhCsVs.jpg",
+    "Seasons": 6
+  },
+  {
+    "Title": "Invincible",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/yDWJYRAwMNKa767HIHXqnUq0ZtD.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Arcane",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "The Umbrella Academy",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/scZlQQqnsc1gravityCBGALaJTx.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Sherlock",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/7WTsnHkbA0FaG6R9twfFde0I9hl.jpg",
+    "Seasons": 4
+  },
+  {
+    "Title": "Altered Carbon",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/tPpVPYjHFDFMRMSg0VItOn6LaJQ.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Sacred Games",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/iFlBnL8nHd63HOJfVeA7HJKN7RP.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Delhi Crime",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/9oYAuNELCuZBL8mEqQBSBdvpx6u.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Mirzapur",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/fAcQR6NKkTAl3oXpZxZF8cpTxIF.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Panchayat",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/eJKhaTpBSMpNNFu0HGAcP4uXrNZ.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Scam 1992",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/kbCbMUOHkUALVGqCiGqTNPMBnCr.jpg",
+    "Seasons": 1
+  },
+  {
+    "Title": "The Family Man",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/3aTiF1LTbEHoHCR0oRkOJt9pAx4.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Four More Shots Please",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/kgNGMpvdkOpWibrXaDIVxHqCkgK.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Aarya",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/7RVzQ9IxaHDMOiXVD3IVfwJrMoj.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Paatal Lok",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/A5bXyJBfrCAFBWVzEMOiPjLMjlr.jpg",
+    "Seasons": 2
+  },
+  {
+    "Title": "Bandish Bandits",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/jnv9FWqkVFLPFGJPX1JVKRGFuaS.jpg",
+    "Seasons": 1
+  },
+  {
+    "Title": "Inside Edge",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/9MxdVVa7eTmVbDRLcKwsHmO3KhE.jpg",
+    "Seasons": 3
+  },
+  {
+    "Title": "Breathe: Into the Shadows",
+    "Type": "Web Series",
+    "IMG": "https://image.tmdb.org/t/p/w500/n0ybhibhNMzPkTFMhiSHQKmTEuj.jpg",
+    "Seasons": 2
+  }
+]

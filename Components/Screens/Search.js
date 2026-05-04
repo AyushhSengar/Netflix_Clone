@@ -4,6 +4,7 @@ import {
     FlatList,
     Image,
     Platform,
+    ScrollView,
     StatusBar,
     StyleSheet,
     Text,
@@ -34,6 +35,27 @@ const ClearIcon = ({ color = '#888' }) => (
   </Svg>
 );
 
+// ─── Featured Card (shown before search) ─────────────────────────
+const FeaturedCard = ({ item, onPress }) => (
+  <TouchableOpacity style={styles.featuredCard} onPress={onPress} activeOpacity={0.75}>
+    <Image source={{ uri: item.IMG }} style={styles.featuredPoster} resizeMode="cover" />
+    {/* Gradient overlay */}
+    <View style={styles.featuredOverlay} />
+    <View style={styles.featuredInfo}>
+      <View style={[
+        styles.badge,
+        { backgroundColor: item.Type === 'Movie' ? '#E50914' : '#0071eb' }
+      ]}>
+        <Text style={styles.badgeText}>{item.Type}</Text>
+      </View>
+      <Text style={styles.featuredTitle} numberOfLines={2}>{item.Title}</Text>
+      {item.Seasons && (
+        <Text style={styles.featuredSeasons}>{item.Seasons} Seasons</Text>
+      )}
+    </View>
+  </TouchableOpacity>
+);
+
 export default function Search() {
   const navigation = useNavigation();
   const inputRef = useRef(null);
@@ -42,6 +64,7 @@ export default function Search() {
   const [focused, setFocused] = useState(false);
   const [allData, setAllData] = useState([]);
   const [results, setResults] = useState([]);
+  const [featured, setFeatured] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // ─── Fetch all Movies + Web Series on mount ───────────────────
@@ -50,20 +73,27 @@ export default function Search() {
       try {
         const [moviesSnap, seriesSnap] = await Promise.all([
           getDocs(collection(db, 'Movies')),
-          getDocs(collection(db, 'Web Series')),
+          getDocs(collection(db, 'Web_Series')),
         ]);
 
-        const movies = moviesSnap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const movies = moviesSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const series = seriesSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const combined = [...movies, ...series];
 
-        const series = seriesSnap.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        setAllData(combined);
 
-        setAllData([...movies, ...series]);
+        // shuffle helper
+        const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+
+        // pick 4 from each
+        const randomMovies = shuffle(movies).slice(0, 4);
+        const randomSeries = shuffle(series).slice(0, 4);
+
+        // combine and shuffle again
+        const mixed = shuffle([...randomMovies, ...randomSeries]);
+
+        setFeatured(mixed);
+        
       } catch (err) {
         console.log('Fetch error:', err);
       } finally {
@@ -80,26 +110,20 @@ export default function Search() {
       setResults([]);
       return;
     }
-
     const filtered = allData.filter((item) =>
       item.Title?.toLowerCase().includes(query.toLowerCase())
     );
-
     setResults(filtered);
   }, [query, allData]);
 
-  // ─── Render each result ───────────────────────────────────────
+  // ─── Render each search result ────────────────────────────────
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
       activeOpacity={0.7}
       onPress={() => navigation.navigate('Movie', { item })}
     >
-      <Image
-        source={{ uri: item.IMG }}
-        style={styles.poster}
-        resizeMode="cover"
-      />
+      <Image source={{ uri: item.IMG }} style={styles.poster} resizeMode="cover" />
       <View style={styles.cardInfo}>
         <Text style={styles.cardTitle} numberOfLines={2}>{item.Title}</Text>
         <View style={[
@@ -115,6 +139,20 @@ export default function Search() {
     </TouchableOpacity>
   );
 
+  // ─── Default state — shown before user types ──────────────────
+  const renderDefault = () => (
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.defaultContainer}>
+      <Text style={styles.suggestedLabel}>Suggested for you</Text>
+      {featured.map((item) => (
+        <FeaturedCard
+          key={item.id}
+          item={item}
+          onPress={() => navigation.navigate('Movie', { item })}
+        />
+      ))}
+    </ScrollView>
+  );
+
   return (
     <View style={styles.root}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
@@ -122,7 +160,6 @@ export default function Search() {
       {/* ── Search Bar ── */}
       <View style={styles.searchContainer}>
         {focused || query.length > 0 ? (
-          // Active state
           <View style={styles.searchBarActive}>
             <SearchIcon color="#888" />
             <TextInput
@@ -145,7 +182,6 @@ export default function Search() {
             )}
           </View>
         ) : (
-          // Default state
           <TouchableOpacity
             style={styles.searchBarDefault}
             onPress={() => {
@@ -164,11 +200,8 @@ export default function Search() {
       {loading ? (
         <ActivityIndicator size="large" color="#E50914" style={{ marginTop: 40 }} />
       ) : query.trim() === '' ? (
-        // No query yet
-        <View style={styles.emptyContainer}>
-          <SearchIcon color="#444" />
-          <Text style={styles.emptyText}>Search for movies or web series</Text>
-        </View>
+        // Show featured before any search
+        renderDefault()
       ) : results.length === 0 ? (
         // No results
         <View style={styles.emptyContainer}>
@@ -176,7 +209,7 @@ export default function Search() {
           <Text style={styles.emptyText}>Try a different name</Text>
         </View>
       ) : (
-        // Results list
+        // Search results
         <FlatList
           data={results}
           keyExtractor={(item) => item.id}
@@ -233,6 +266,53 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
 
+  // ── Default / Featured
+  defaultContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 30,
+  },
+  suggestedLabel: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 14,
+  },
+  featuredCard: {
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 14,
+    height: 200,
+    backgroundColor: '#1a1a1a',
+  },
+  featuredPoster: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  featuredOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.52)',
+  },
+  featuredInfo: {
+    position: 'absolute',
+    bottom: 14,
+    left: 14,
+    right: 14,
+    gap: 6,
+  },
+  featuredTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+    textShadowColor: 'rgba(0,0,0,0.6)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  featuredSeasons: {
+    color: '#ccc',
+    fontSize: 12,
+  },
+
   // ── Empty State
   emptyContainer: {
     flex: 1,
@@ -250,7 +330,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  // ── Results
+  // ── Search Results
   list: {
     paddingHorizontal: 16,
     paddingBottom: 20,
