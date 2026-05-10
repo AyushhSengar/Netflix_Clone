@@ -71,7 +71,8 @@ const Home = () => {
             "squidgame",
             "doctorstrange",
             "aliceinborderland",
-            "strangerthings"
+            "strangerthings",
+            "rises"
         ];
 
         const retroKeywords = [
@@ -150,7 +151,7 @@ const Home = () => {
             </View>
           </View>
 
-          <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
+          <ScrollView contentContainerStyle={{  }}>
 
             {/* 🔒 FILTER BUTTONS (UNCHANGED) */}
             <View style={{

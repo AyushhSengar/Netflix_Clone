@@ -1,14 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Platform, StyleSheet, Text } from 'react-native';
-import Svg, { Circle, Path } from 'react-native-svg';
-
-import { Image } from 'react-native';
+import { Image, Platform, StyleSheet, Text } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import Downloads from '../Screens/Downloads';
+import Svg, { Circle, Path } from 'react-native-svg';
 import Movie from '../Screens/Movie';
 import Profile from '../Screens/Profile';
 import Search from '../Screens/Search';
+import DownloadStack from './DownloadStack';
 import Stack from './Stack';
 
 const Tab = createBottomTabNavigator();
@@ -104,9 +102,9 @@ export default function NavBar() {
         }}
       />
 
-      <Tab.Screen
+        <Tab.Screen
         name="Downloads"
-        component={Downloads}
+        component={DownloadStack}
         options={{
           tabBarIcon: ({ color }) => <DownloadsIcon color={color} />,
           tabBarLabel: ({ color }) => <TabLabel label="Downloads" color={color} />,
