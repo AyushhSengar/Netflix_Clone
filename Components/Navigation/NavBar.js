@@ -12,7 +12,6 @@ import Stack from './Stack';
 const Tab = createBottomTabNavigator();
 const SearchStack = createStackNavigator();
 
-// ─── Search Stack Navigator ──────────────────────────────────────
 function SearchNavigator() {
   return (
     <SearchStack.Navigator screenOptions={{ headerShown: false }}>
@@ -21,15 +20,12 @@ function SearchNavigator() {
         name="Movie"
         component={Movie}
         options={{
-          tabBarStyle: { display: 'none' }  // 👈 hides navbar
+          tabBarStyle: { display: 'none' }
         }}
       />
     </SearchStack.Navigator>
   );
 }
-
-
-// ─── Custom Icons ────────────────────────────────────────────────
 
 const HomeIcon = ({ color }) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -65,12 +61,10 @@ const DownloadsIcon = ({ color }) => (
   </Svg>
 );
 
-// ─── Tab Label ───────────────────────────────────────────────────
 const TabLabel = ({ label, color }) => (
   <Text style={[styles.label, { color }]}>{label}</Text>
 );
 
-// ─── NavBar ──────────────────────────────────────────────────────
 export default function NavBar() {
   return (
     <Tab.Navigator
@@ -80,7 +74,6 @@ export default function NavBar() {
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#6b6b6b',
-
       }}
     >
       <Tab.Screen
@@ -92,7 +85,6 @@ export default function NavBar() {
         }}
       />
 
-
       <Tab.Screen
         name="Search"
         component={SearchNavigator}
@@ -102,7 +94,7 @@ export default function NavBar() {
         }}
       />
 
-        <Tab.Screen
+      <Tab.Screen
         name="Downloads"
         component={DownloadStack}
         options={{
@@ -115,35 +107,32 @@ export default function NavBar() {
         name="Profile"
         component={Profile}
         options={{
-            tabBarIcon: ({ size }) => (
+          tabBarIcon: ({ size }) => (
             <Image
-                source={{ uri: 'https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg' }} // dummy profile image
-                style={{
+              source={{ uri: 'https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg' }}
+              style={{
                 width: responsiveWidth(7),
                 height: responsiveHeight(3),
-                //   borderRadius: size / 2, // makes it circular
-                }}
+              }}
             />
-            ),
-            tabBarLabel: ({ color }) => (
+          ),
+          tabBarLabel: ({ color }) => (
             <TabLabel label="Profile" color={color} />
-            ),
+          ),
         }}
-        />
+      />
     </Tab.Navigator>
   );
 }
 
-// ─── Styles ──────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   tabBar: {
-  backgroundColor: '#000',
-  borderTopWidth: 0,
-
-  height: Platform.OS === 'ios' ? 90 : 75,  // 👈 increase height
-  paddingBottom: Platform.OS === 'ios' ? 25 : 15, // 👈 pushes content up
-  paddingTop: 8,
-},
+    backgroundColor: '#000',
+    borderTopWidth: 0,
+    height: Platform.OS === 'ios' ? 90 : 75,
+    paddingBottom: Platform.OS === 'ios' ? 25 : 15,
+    paddingTop: 8,
+  },
 
   label: {
     fontSize: 10,

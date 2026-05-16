@@ -13,7 +13,6 @@ import {
     View,
 } from 'react-native';
 
-// ─── Responsive Scaling ────────────────────────────────────────────────────────
 const BASE_WIDTH = 375;
 const BASE_HEIGHT = 812;
 
@@ -26,7 +25,6 @@ const scaleFont = (size) => {
   return Math.round(PixelRatio.roundToNearestPixel(Math.min(scaled, size * 1.4)));
 };
 
-// ─── Slide Data ────────────────────────────────────────────────────────────────
 const slides = [
   {
     id: '1',
@@ -50,7 +48,6 @@ const slides = [
   },
 ];
 
-// ─── Component ─────────────────────────────────────────────────────────────────
 export default function Intro() {
   const navigation = useNavigation()
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,18 +72,15 @@ export default function Intro() {
 
   return (
     <>
-      {/* Force status bar transparent so it doesn't interfere */}
       <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle="light-content"
       />
 
-      {/* Root fills entire screen including behind status bar */}
       <View style={styles.root}>
         <SafeAreaView style={styles.safeArea}>
 
-          {/* ── Header ── */}
           <View style={styles.header}>
             <Text style={styles.logo}>NETFLIX</Text>
             <View style={styles.headerRight}>
@@ -105,7 +99,6 @@ export default function Intro() {
             </View>
           </View>
 
-          {/* ── Slides ── */}
           <FlatList
             ref={flatListRef}
             data={slides}
@@ -121,9 +114,7 @@ export default function Intro() {
             decelerationRate="fast"
           />
 
-          {/* ── Bottom Section ── */}
           <View style={styles.bottomSection}>
-            {/* Dots */}
             <View style={styles.dotsContainer}>
               {slides.map((_, index) => (
                 <View
@@ -138,12 +129,10 @@ export default function Intro() {
               ))}
             </View>
 
-            {/* Button */}
             <TouchableOpacity
               style={styles.button}
               activeOpacity={0.82}
               onPress={()=>navigation.navigate("SignUp")}
-              
             >
               <Text style={styles.buttonText}>Get Started</Text>
             </TouchableOpacity>
@@ -155,7 +144,6 @@ export default function Intro() {
   );
 }
 
-// ─── Styles ────────────────────────────────────────────────────────────────────
 const ANDROID_STATUS_BAR = Platform.OS === 'android' ? StatusBar.currentHeight ?? 24 : 0;
 
 const styles = StyleSheet.create({
@@ -165,11 +153,9 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    // Push content below status bar on Android manually
     paddingTop: ANDROID_STATUS_BAR,
   },
 
-  // ── Header
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -177,7 +163,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaleW(20),
     paddingTop: scaleH(10),
     paddingBottom: scaleH(10),
-    // Ensure header never overlaps status bar
     marginTop: Platform.OS === 'android' ? 0 : scaleH(4),
   },
   logo: {
@@ -196,7 +181,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // ── Slides
   flatList: {
     flex: 1,
   },
@@ -224,10 +208,8 @@ const styles = StyleSheet.create({
     lineHeight: scaleFont(23),
   },
 
-  // ── Bottom
   bottomSection: {
     paddingHorizontal: scaleW(20),
-    // Extra bottom padding so button is never hidden by nav bar or gestures
     paddingBottom: Platform.select({
       android: scaleH(80),
       ios: scaleH(10),
@@ -237,7 +219,6 @@ const styles = StyleSheet.create({
     gap: scaleH(20),
   },
 
-  // ── Dots
   dotsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -257,7 +238,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#555',
   },
 
-  // ── Button
   button: {
     backgroundColor: '#E50914',
     width: '100%',

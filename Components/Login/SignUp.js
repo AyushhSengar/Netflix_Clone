@@ -20,8 +20,8 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ NEW
-  const [dob, setDob] = useState(null); // ✅ FIXED
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [dob, setDob] = useState(null);
   const [showPicker, setShowPicker] = useState(false);
 
   const handleRegister = async () => {
@@ -51,7 +51,6 @@ export default function SignUp() {
         createdAt: new Date(),
       });
 
-
     } catch (err) {
       console.log(err);
       alert("Signup failed");
@@ -63,7 +62,6 @@ export default function SignUp() {
 
       <Text style={styles.title}>Create Account</Text>
 
-      {/* NAME */}
       <TextInput
         placeholder="Full Name"
         placeholderTextColor="#888"
@@ -72,19 +70,18 @@ export default function SignUp() {
         onChangeText={setName}
       />
 
-      {/* DOB */}
       <TouchableOpacity
         style={styles.input}
         onPress={() => setShowPicker(true)}
       >
         <Text style={{ color: dob ? "#fff" : "#888" }}>
-          {dob ? dob.toDateString() : "Select Date of Birth"} {/* ✅ PLACEHOLDER */}
+          {dob ? dob.toDateString() : "Select Date of Birth"}
         </Text>
       </TouchableOpacity>
 
       {showPicker && (
         <DateTimePicker
-          value={dob || new Date()} // fallback only for picker
+          value={dob || new Date()}
           mode="date"
           display="default"
           onChange={(e, selectedDate) => {
@@ -94,7 +91,6 @@ export default function SignUp() {
         />
       )}
 
-      {/* EMAIL */}
       <TextInput
         placeholder="Email"
         placeholderTextColor="#888"
@@ -103,7 +99,6 @@ export default function SignUp() {
         onChangeText={setEmail}
       />
 
-      {/* PASSWORD */}
       <TextInput
         placeholder="Password"
         placeholderTextColor="#888"
@@ -113,7 +108,6 @@ export default function SignUp() {
         onChangeText={setPassword}
       />
 
-      {/* CONFIRM PASSWORD */}
       <TextInput
         placeholder="Confirm Password"
         placeholderTextColor="#888"
@@ -123,7 +117,6 @@ export default function SignUp() {
         onChangeText={setConfirmPassword}
       />
 
-      {/* BUTTON */}
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>

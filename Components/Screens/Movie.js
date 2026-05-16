@@ -4,17 +4,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 
 import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  Platform,
-  RefreshControl,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    Platform,
+    RefreshControl,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 import Svg, { Circle, Path } from 'react-native-svg';
@@ -25,8 +25,6 @@ const ANDROID_SB =
   Platform.OS === 'android'
     ? StatusBar.currentHeight ?? 24
     : 0;
-
-// ─── Icons ───────────────────────────────────────────────────────
 
 const BackIcon = () => (
   <Svg width={26} height={26} viewBox="0 0 24 24" fill="none">
@@ -102,8 +100,6 @@ const ThumbsUpIcon = () => (
   </Svg>
 );
 
-// ─── Episode Card ────────────────────────────────────────────────
-
 const EpisodeCard = ({ number, title }) => (
   <View style={styles.episodeCard}>
     <View style={styles.episodeThumbnail}>
@@ -127,8 +123,6 @@ const EpisodeCard = ({ number, title }) => (
   </View>
 );
 
-// ─── MAIN SCREEN ─────────────────────────────────────────────────
-
 export default function Movie() {
 
   const navigation = useNavigation();
@@ -142,8 +136,6 @@ export default function Movie() {
   const [refreshing, setRefreshing] = useState(false);
 
   const isWebSeries = item.Type === 'Web Series';
-
-  // ─── CHECK DOWNLOAD ─────────────────────────────
 
   const checkDownload = async () => {
 
@@ -165,8 +157,6 @@ export default function Movie() {
     checkDownload();
   }, []);
 
-  // ─── REFRESH ────────────────────────────────────
-
   const onRefresh = async () => {
 
     try {
@@ -184,8 +174,6 @@ export default function Movie() {
       setRefreshing(false);
     }
   };
-
-  // ─── DOWNLOAD ───────────────────────────────────
 
   const handleDownload = async () => {
 
@@ -215,8 +203,6 @@ export default function Movie() {
 
     }, 800);
   };
-
-  // ─── FAKE EPISODES ──────────────────────────────
 
   const episodes = isWebSeries
     ? Array.from({ length: 5 }, (_, i) => ({
@@ -250,8 +236,6 @@ export default function Movie() {
         }
       >
 
-        {/* ── Hero ── */}
-
         <View style={styles.heroContainer}>
 
           <Image
@@ -269,7 +253,6 @@ export default function Movie() {
             style={styles.gradient}
           />
 
-          {/* Back */}
           <TouchableOpacity
             style={styles.backBtn}
             onPress={() => navigation.goBack()}
@@ -278,7 +261,6 @@ export default function Movie() {
             <BackIcon />
           </TouchableOpacity>
 
-          {/* Netflix badge */}
           <View style={styles.netflixBadge}>
             <Text style={styles.netflixBadgeText}>N</Text>
 
@@ -287,7 +269,6 @@ export default function Movie() {
             </Text>
           </View>
 
-          {/* Title */}
           <View style={styles.heroBottom}>
             <Text style={styles.heroTitle}>
               {item.Title}
@@ -295,11 +276,8 @@ export default function Movie() {
           </View>
         </View>
 
-        {/* ── Info ── */}
-
         <View style={styles.infoSection}>
 
-          {/* Meta */}
           <View style={styles.metaRow}>
 
             {isWebSeries && (
@@ -318,7 +296,6 @@ export default function Movie() {
 
           </View>
 
-          {/* Tags */}
           <View style={styles.tagsRow}>
 
             <Text style={styles.tag}>
@@ -335,7 +312,6 @@ export default function Movie() {
 
           </View>
 
-          {/* Play */}
           <TouchableOpacity
             style={styles.playBtn}
             activeOpacity={0.85}
@@ -344,7 +320,6 @@ export default function Movie() {
             <Text style={styles.playText}>Play</Text>
           </TouchableOpacity>
 
-          {/* Download */}
           <TouchableOpacity
             style={styles.downloadBtn}
             activeOpacity={0.85}
@@ -373,7 +348,6 @@ export default function Movie() {
 
           </TouchableOpacity>
 
-          {/* Description */}
           <Text style={styles.description}>
             {isWebSeries
               ? `${item.Title} is a gripping series that keeps you on the edge of your seat with every episode.`
@@ -381,13 +355,11 @@ export default function Movie() {
             }
           </Text>
 
-          {/* Cast */}
           <Text style={styles.castText}>
             <Text style={styles.castLabel}>Cast: </Text>
             John Doe, Jane Smith, Alex Johnson
           </Text>
 
-          {/* Actions */}
           <View style={styles.actionsRow}>
 
             <TouchableOpacity style={styles.actionBtn}>
@@ -409,7 +381,6 @@ export default function Movie() {
 
           <View style={styles.divider} />
 
-          {/* Episodes */}
           {isWebSeries && (
 
             <View style={styles.episodesSection}>
@@ -455,8 +426,6 @@ export default function Movie() {
     </View>
   );
 }
-
-// ─── Styles ──────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
 

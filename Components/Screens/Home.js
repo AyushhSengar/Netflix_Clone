@@ -1,5 +1,4 @@
-
-                    import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
@@ -36,7 +35,6 @@ const Home = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
         try {
-        // 🔹 USER NAME (unchanged)
         if (user) {
             const userRef = doc(db, "USERS", user.uid);
             const userSnap = await getDoc(userRef);
@@ -45,9 +43,8 @@ const Home = () => {
             }
         }
 
-        // 🔥 FETCH BOTH COLLECTIONS
         const movieSnap = await getDocs(collection(db, "Movies"));
-        const seriesSnap = await getDocs(collection(db, "Web_Series")); // ✅ correct name
+        const seriesSnap = await getDocs(collection(db, "Web_Series"));
 
         const movies = movieSnap.docs.map(doc => ({
             id: doc.id,
@@ -59,10 +56,8 @@ const Home = () => {
             ...doc.data()
         }));
 
-        // 🔥 MERGE DATA
         const allData = [...movies, ...series];
 
-        // 🔥 CLEAN FUNCTION (IMPORTANT)
         const clean = (str) =>
             str?.toLowerCase().replace(/[^a-z0-9]/g, '');
 
@@ -84,7 +79,6 @@ const Home = () => {
             "daredevil"
         ];
 
-
         const popularFiltered = allData.filter(item =>
             popularKeywords.some(k =>
             clean(item.Title).includes(k)
@@ -100,10 +94,6 @@ const Home = () => {
         setPopularData(popularFiltered.slice(0, 5));
         setRetroData(retroFiltered.slice(0, 5));
 
-        // console.log("ALL DATA:", allData.map(x => x.Title));
-        // console.log("POPULAR:", popularFiltered.map(x => x.Title));
-        // console.log("RETRO:", retroFiltered.map(x => x.Title));
-
         } catch (err) {
         console.log("FETCH ERROR:", err);
         }
@@ -112,13 +102,11 @@ const Home = () => {
     return unsubscribe;
     }, []);
 
- 
   return (
     <View style={{ flex: 1 }}>
       <LinearGradient colors={['#1a1a2e', '#31263d', 'black']} style={{ flex: 1 }}>
         <View style={styles.container}>
 
-          {/* 🔒 HEADER + SEARCH (UNCHANGED) */}
           <View style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -151,9 +139,8 @@ const Home = () => {
             </View>
           </View>
 
-          <ScrollView contentContainerStyle={{  }}>
+          <ScrollView contentContainerStyle={{}}>
 
-            {/* 🔒 FILTER BUTTONS (UNCHANGED) */}
             <View style={{
               marginBottom: responsiveHeight(2),
               flexDirection: "row",
@@ -180,37 +167,25 @@ const Home = () => {
                 flexDirection: "row",
               }}>
                 <Text style={{ color: "white", padding: 8 }}>Categories</Text>
-                {/* <AntDesign name="down" color="white" size={14} /> */}
               </TouchableOpacity>
             </View>
-                    <View>
-                        <ImageBackground
-                            style={{
-                                // width: responsiveWidth(85),
-                                alignContent: "center",
-                                // aspectRatio: 0.7,
-                                marginHorizontal: responsiveWidth(4),
-                                overflow: 'hidden',
-                                borderRadius: 21,
-                                borderColor: "#818181",
-                                justifyContent: "center"
-                            }}
-                            source={{ uri: "https://www.hollywoodreporter.com/wp-content/uploads/2024/12/You-season-5-poster-1-H-2024.png?w=1000" }}
-                        // source={{ uri: "https://m.media-amazon.com/images/I/91iNuP5OJ7S.jpg" }}
-                        >
-                            <View style={styles.buttonContainer}>
-                                {/* <TouchableOpacity style={styles.playButton}>
-                                    <Ionicons name="play" size={26} color="#000" />
-                                    <Text style={styles.playText}>Play</Text>
-                                </TouchableOpacity> */}
 
-                                {/* <TouchableOpacity style={styles.listButton}>
-                                    <Ionicons name="add" size={26} color="#fff" />
-                                    <Text style={styles.listText}>My List</Text>
-                                </TouchableOpacity> */}
-                            </View>
-                        </ImageBackground>
-                    </View> 
+            <View>
+              <ImageBackground
+                style={{
+                  alignContent: "center",
+                  marginHorizontal: responsiveWidth(4),
+                  overflow: 'hidden',
+                  borderRadius: 21,
+                  borderColor: "#818181",
+                  justifyContent: "center"
+                }}
+                source={{ uri: "https://www.hollywoodreporter.com/wp-content/uploads/2024/12/You-season-5-poster-1-H-2024.png?w=1000" }}
+              >
+                <View style={styles.buttonContainer}>
+                </View>
+              </ImageBackground>
+            </View>
 
             <Text style={styles.sectionTitle}>Popular on Netflix</Text>
 
@@ -224,7 +199,6 @@ const Home = () => {
               </View>
             </ScrollView>
 
-            {/* 🔥 RETRO (DATA FIXED ONLY) */}
             <Text style={styles.sectionTitle}>Retro TV</Text>
 
             <ScrollView horizontal>
@@ -296,9 +270,9 @@ const styles = StyleSheet.create({
   playText: {
     marginLeft: 6,
     color: '#000',
-},
+  },
 
-listText: {
+  listText: {
     marginLeft: 6,
     color: '#fff'
   }

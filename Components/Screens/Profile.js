@@ -19,7 +19,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { auth, db } from '../../config/firebaseConfig';
 
-// ─── Responsive Scaling ───────────────────────────────────────────
+
 const BASE_WIDTH = 375;
 const BASE_HEIGHT = 812;
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
@@ -29,7 +29,6 @@ const scaleFont = (s) =>
   Math.round(PixelRatio.roundToNearestPixel(Math.min((SCREEN_W / BASE_WIDTH) * s, s * 1.4)));
 const ANDROID_SB = Platform.OS === 'android' ? StatusBar.currentHeight ?? 24 : 0;
 
-// ─── Icons ────────────────────────────────────────────────────────
 const ChevronRight = () => (
   <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
     <Path d="M9 18L15 12L9 6" stroke="#666" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
@@ -78,13 +77,10 @@ const HelpIcon = () => (
   </Svg>
 );
 
-// ─── Avatar ───────────────────────────────────────────────────────
-// Netflix-style colored avatar with initial
 const AVATAR_COLORS = ['#E50914', '#831010', '#0071EB', '#E87C03', '#54B9C5'];
 
 const UserAvatar = ({ name, size = 80 }) => {
   const initial = name ? name.charAt(0).toUpperCase() : '?';
-  // Pick color based on first char code so it's consistent
   const colorIndex = name ? name.charCodeAt(0) % AVATAR_COLORS.length : 0;
   const bg = AVATAR_COLORS[colorIndex];
 
@@ -104,7 +100,7 @@ const UserAvatar = ({ name, size = 80 }) => {
   );
 };
 
-// ─── Row item ─────────────────────────────────────────────────────
+
 const RowItem = ({ icon, label, subtitle, onPress, danger = false }) => (
   <TouchableOpacity style={styles.rowItem} onPress={onPress} activeOpacity={0.7}>
     <View style={styles.rowLeft}>
@@ -118,7 +114,7 @@ const RowItem = ({ icon, label, subtitle, onPress, danger = false }) => (
   </TouchableOpacity>
 );
 
-// ─── Section ──────────────────────────────────────────────────────
+
 const Section = ({ title, children }) => (
   <View style={styles.section}>
     {title ? <Text style={styles.sectionTitle}>{title}</Text> : null}
@@ -126,7 +122,6 @@ const Section = ({ title, children }) => (
   </View>
 );
 
-// ─── Main Screen ──────────────────────────────────────────────────
 export default function Profile() {
   const navigation = useNavigation();
   const user = auth.currentUser;
@@ -140,7 +135,6 @@ export default function Profile() {
     user?.displayName || user?.email?.split('@')[0] || 'User'
   );
 
-  // ─── Fetch ProfileIMG + UserName from USERS collection ──────
   useEffect(() => {
     if (!user?.uid) return;
     const fetchUserDoc = async () => {
@@ -174,7 +168,7 @@ export default function Profile() {
             setSigningOut(true);
             try {
               await signOut(auth);
-              // Navigation handled automatically by your auth listener
+
             } catch (e) {
               Alert.alert('Error', 'Failed to sign out. Try again.');
             } finally {
@@ -190,7 +184,7 @@ export default function Profile() {
     <View style={styles.root}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
 
-      {/* ── Header ── */}
+      
       <View style={styles.header}>
         <Text style={styles.logo}>NETFLIX</Text>
       </View>
@@ -199,7 +193,6 @@ export default function Profile() {
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
-        {/* ── Profile Hero ── */}
         <View style={styles.hero}>
           <View style={styles.avatarWrap}>
             {profileIMG && !imgError ? (
@@ -224,13 +217,10 @@ export default function Profile() {
           <Text style={styles.userName}>{displayName}</Text>
           <Text style={styles.userEmail}>{email}</Text>
 
-          {/* Switch Profile button — Netflix style */}
           <TouchableOpacity style={styles.switchBtn} activeOpacity={0.8}>
             <Text style={styles.switchBtnText}>Switch Profile</Text>
           </TouchableOpacity>
         </View>
-
-        {/* ── Account Section ── */}
         <Section title="Account">
           <RowItem
             icon={<AccountIcon />}
@@ -261,7 +251,6 @@ export default function Profile() {
           />
         </Section>
 
-        {/* ── Sign Out ── */}
         <Section>
           <RowItem
             icon={<SignOutIcon />}
@@ -277,7 +266,6 @@ export default function Profile() {
   );
 }
 
-// ─── Styles ───────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -357,7 +345,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
 
-  // Sections
   section: {
     marginTop: scaleH(24),
     paddingHorizontal: scaleW(16),
@@ -379,7 +366,6 @@ const styles = StyleSheet.create({
     borderColor: '#222',
   },
 
-  // Row
   rowItem: {
     flexDirection: 'row',
     alignItems: 'center',

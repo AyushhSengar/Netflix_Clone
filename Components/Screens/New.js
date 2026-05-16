@@ -35,7 +35,6 @@ export default function HomeScreen() {
     getMovies();
   }, []);
 
-  // 🔥 Loading UI
   if (loading) {
     return (
       <View
@@ -54,7 +53,6 @@ export default function HomeScreen() {
     );
   }
 
-  // 🔥 No data UI
   if (movies.length === 0) {
     return (
       <View
@@ -72,7 +70,6 @@ export default function HomeScreen() {
     );
   }
 
-  // 🔥 Main UI
   return (
     <View style={{ flex: 1, backgroundColor: "black", padding: 10 }}>
       <FlatList
